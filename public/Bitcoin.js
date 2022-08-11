@@ -1,4 +1,6 @@
 let canvas;
+let URL = 'https://api.coindesk.com/v1/bpi/currentprice.json';
+let bit = null;
 
 function setup() {
     frameRate(60);
@@ -7,13 +9,25 @@ function setup() {
     canvas.style('position', 'fixed');
     canvas.style('top', '0');
     canvas.style('right', '0');
+
+    console.log(fetch(URL).then(response => response.json()));
+
+    fetch(URL)
+        .then(response => response.json())
+        .then(data => {bit=data
+                console.log(bit.fact)})
+
 }
 
 function draw() {
-    //background(0, 50);
     background(0);
     newCursor();
     
+    if(bit != null){
+    textSize(20);
+    textWrap(WORD);
+    text(bit.bpi.USD.code + "  " + bit.bpi.USD.rate, 50, 50, 300)
+    }
 }
 
 function mouseClicked(){
